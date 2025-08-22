@@ -20,6 +20,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.polardbx.common.exception.TddlNestableRuntimeException;
 import com.alibaba.polardbx.common.exception.TddlRuntimeException;
 import com.alibaba.polardbx.common.exception.code.ErrorCode;
+import com.alibaba.polardbx.common.properties.DynamicConfig;
+import com.alibaba.polardbx.common.utils.logger.Logger;
+import com.alibaba.polardbx.common.utils.logger.LoggerFactory;
 import com.alibaba.polardbx.common.utils.thread.ExecutorUtil;
 import com.alibaba.polardbx.common.utils.thread.NamedThreadFactory;
 import com.alibaba.polardbx.common.utils.thread.ThreadCpuStatUtil;
@@ -33,7 +36,11 @@ import com.alibaba.polardbx.rpc.packet.XPacket;
 import com.alibaba.polardbx.rpc.perf.DnPerfItem;
 import com.alibaba.polardbx.rpc.perf.ReactorPerfItem;
 import com.alibaba.polardbx.rpc.perf.SessionPerfItem;
+import com.alibaba.polardbx.rpc.perf.SwitchoverPerfCollection;
 import com.alibaba.polardbx.rpc.perf.TcpPerfItem;
+import com.mysql.cj.polarx.protobuf.PolarxNotice;
+import com.mysql.cj.x.protobuf.Polarx;
+import com.mysql.cj.x.protobuf.PolarxDatatypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +50,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
@@ -51,6 +59,7 @@ import java.util.function.BiFunction;
  * @version 1.0
  */
 public class XConnectionManager {
+    private static final Logger logger = LoggerFactory.getLogger(XConnectionManager.class);
 
     private final NIOWorker eventWorker = new NIOWorker(ThreadCpuStatUtil.NUM_CORES * XConfig.NIO_THREAD_MULTIPLY);
     private final Map<String, XClientPool> instancePool = new ConcurrentHashMap<>();
@@ -96,6 +105,12 @@ public class XConnectionManager {
 
     // instId
     private final AtomicReference<String> instId = new AtomicReference<>(null);
+
+    // For leader change check.
+    private final AtomicLong anyOneChangingLeaderStartTime = new AtomicLong(0);
+
+    // switchover collector
+    private final Map<String, SwitchoverPerfCollection> switchoverPerfCollector = new ConcurrentHashMap<>();
 
     private XConnectionManager(int maxClientPerInstance, int maxSessionPerClient, int maxPooledSessionPerInstance) {
         this.maxClientPerInstance = maxClientPerInstance;
@@ -414,13 +429,22 @@ public class XConnectionManager {
         return instId;
     }
 
+    public SwitchoverPerfCollection getSwitchoverPerfCollector(String instId) {
+        return switchoverPerfCollector.computeIfAbsent(instId, o -> new SwitchoverPerfCollection());
+    }
+
     public void initializeDataSource(String host, int port, String username, String password, String instInfo) {
         synchronized (instancePool) {
+            final AtomicBoolean isNew = new AtomicBoolean(false);
             final XClientPool clientPool =
                 instancePool
                     .computeIfAbsent(digest(host, port, username, password),
-                        key -> new XClientPool(this, host, port, username, password));
-            final int cnt = clientPool.getRefCount().getAndIncrement();
+                        key -> {
+                            isNew.set(true);
+                            return new XClientPool(this, host, port, username, password);
+                        });
+            // Increase ref count if not new one(new instance will set ref to 1).
+            final int cnt = isNew.get() ? 1 : clientPool.getRefCount().getAndIncrement();
             XLog.XLogLogger.info("XConnectionManager new datasource to "
                 + username + "@" + host + ":" + port + " id is " + cnt
                 + " NOW_GLOBAL_SESSION: " + XSession.GLOBAL_COUNTER.get());
@@ -452,32 +476,70 @@ public class XConnectionManager {
 
     public BiFunction<XClient, XPacket, Boolean> getPacketConsumer() {
         return (cli, pkt) -> {
-            // TODO: Global dealing for any server notify.
-//            try {
-//                if (pkt.getType() == Polarx.ServerMessages.Type.NOTICE_VALUE) {
-//                    // Notice.
-//                    PolarxNotice.Frame frame = (PolarxNotice.Frame) pkt.getPacket();
-//                    switch (frame.getType()) {
-//                    case 1:
-//                        final PolarxNotice.Warning warning = PolarxNotice.Warning.parseFrom(frame.getPayload());
-//                        break;
-//
-//                    case 2:
-//                        final PolarxNotice.SessionVariableChanged sessionVariableChanged =
-//                            PolarxNotice.SessionVariableChanged.parseFrom(frame.getPayload());
-//                        break;
-//
-//                    case 3:
-//                        final PolarxNotice.SessionStateChanged sessionStateChanged =
-//                            PolarxNotice.SessionStateChanged.parseFrom(frame.getPayload());
-//                        break;
-//                    }
-//                }
-//            } catch (Exception e) {
-//                logger.error(e);
-//            }
+            if (DynamicConfig.getInstance().isEnableSmoothSwitchover()) {
+                try {
+                    if (pkt.getType() == Polarx.ServerMessages.Type.NOTICE_VALUE) {
+                        // Notice.
+                        final PolarxNotice.Frame frame = (PolarxNotice.Frame) pkt.getPacket();
+                        if (frame.getType() == PolarxNotice.Frame.Type.SESSION_STATE_CHANGED_VALUE) {
+                            final PolarxNotice.SessionStateChanged sessionStateChanged =
+                                PolarxNotice.SessionStateChanged.parseFrom(frame.getPayload());
+                            if (sessionStateChanged.getParam()
+                                == PolarxNotice.SessionStateChanged.Parameter.EXTRA_SERVER_STATE) {
+                                if (sessionStateChanged.hasValue() &&
+                                    PolarxDatatypes.Scalar.Type.V_UINT == sessionStateChanged.getValue().getType()) {
+                                    final long flags = sessionStateChanged.getValue().getVUnsignedInt();
+                                    if ((flags
+                                        & PolarxNotice.SessionStateChanged.ExtraServerState.IN_LEADER_TRANSFER_FLAG_VALUE)
+                                        != 0) {
+                                        // do collection update
+                                        cli.getPool().getInstInfo().forEach(inst -> {
+                                            final SwitchoverPerfCollection collection = getSwitchoverPerfCollector(inst);
+                                            if (collection != null) {
+                                                collection.reset();
+                                            }
+                                        });
+                                        // mark on global
+                                        markAnyOneChangingLeader();
+                                        // mark on specific client pool
+                                        cli.getPool().markChangingLeader();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
             return true;
         };
+    }
+
+    public void markAnyOneChangingLeader() {
+        anyOneChangingLeaderStartTime.set(System.currentTimeMillis());
+    }
+
+    public void clearAnyOneChangingLeaderMark() {
+        anyOneChangingLeaderStartTime.set(0);
+    }
+
+    public boolean isAnyOneChangingLeader() {
+        while (true) {
+            final long time = anyOneChangingLeaderStartTime.get();
+            if (0 == time) {
+                return false;
+            }
+            final long now = System.currentTimeMillis();
+            if (now - time > DynamicConfig.getInstance().getSwitchoverTimeoutMillis()) {
+                if (anyOneChangingLeaderStartTime.compareAndSet(time, 0)) {
+                    return false;
+                }
+                // recheck
+            } else {
+                return true;
+            }
+        }
     }
 
     public XClientPool getClientPool(String host, int port, String username, String password) {

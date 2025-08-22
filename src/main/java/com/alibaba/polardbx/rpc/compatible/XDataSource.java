@@ -20,6 +20,7 @@ import com.alibaba.polardbx.common.exception.NotSupportException;
 import com.alibaba.polardbx.common.exception.TddlRuntimeException;
 import com.alibaba.polardbx.common.exception.code.ErrorCode;
 import com.alibaba.polardbx.rpc.XConfig;
+import com.alibaba.polardbx.rpc.perf.SwitchoverPerfCollection;
 import com.alibaba.polardbx.rpc.pool.XClientPool;
 import com.alibaba.polardbx.rpc.pool.XConnection;
 import com.alibaba.polardbx.rpc.pool.XConnectionManager;
@@ -63,6 +64,9 @@ public class XDataSource implements DataSource {
     private final AtomicLong cachePlanMiss = new AtomicLong(0);
     private final AtomicLong cacheSqlMiss = new AtomicLong(0);
 
+    // switchover collection
+    private final SwitchoverPerfCollection switchoverPerfCollector;
+
     public XDataSource(String host, int port, String username, String password, String defaultDatabase, String name) {
         this.host = host;
         this.port = port;
@@ -73,7 +77,9 @@ public class XDataSource implements DataSource {
         // decode inst_id via key
         final String[] split = name.split("#");
         final String instInfo = split.length >= 2 ? split[1] : name;
-        XConnectionManager.getInstance().initializeDataSource(host, port, username, password, instInfo);
+        final XConnectionManager manager = XConnectionManager.getInstance();
+        manager.initializeDataSource(host, port, username, password, instInfo);
+        switchoverPerfCollector = manager.getSwitchoverPerfCollector(instInfo);
     }
 
     public void close() {
@@ -153,6 +159,10 @@ public class XDataSource implements DataSource {
 
     public AtomicLong getCacheSqlMiss() {
         return cacheSqlMiss;
+    }
+
+    public SwitchoverPerfCollection getSwitchoverPerfCollector() {
+        return switchoverPerfCollector;
     }
 
     public String getUrl() {

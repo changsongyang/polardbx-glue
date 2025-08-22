@@ -49,7 +49,7 @@ public final class Polarx {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:Polarx.ClientMessages)
       ClientMessagesOrBuilder {
-    private static final long serialVersionUID = 0L;
+  private static final long serialVersionUID = 0L;
     // Use ClientMessages.newBuilder() to construct.
     private ClientMessages(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -84,16 +84,16 @@ public final class Polarx {
         while (!done) {
           int tag = input.readTag();
           switch (tag) {
-          case 0:
-            done = true;
-            break;
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
+            case 0:
               done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
             }
-            break;
-          }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -107,13 +107,13 @@ public final class Polarx {
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
+        getDescriptor() {
       return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_ClientMessages_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-    internalGetFieldAccessorTable() {
+        internalGetFieldAccessorTable() {
       return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_ClientMessages_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.mysql.cj.x.protobuf.Polarx.ClientMessages.class, com.mysql.cj.x.protobuf.Polarx.ClientMessages.Builder.class);
@@ -356,58 +356,58 @@ public final class Polarx {
        */
       public static Type forNumber(int value) {
         switch (value) {
-        case 1: return CON_CAPABILITIES_GET;
-        case 2: return CON_CAPABILITIES_SET;
-        case 3: return CON_CLOSE;
-        case 4: return SESS_AUTHENTICATE_START;
-        case 5: return SESS_AUTHENTICATE_CONTINUE;
-        case 6: return SESS_RESET;
-        case 7: return SESS_CLOSE;
-        case 12: return SQL_STMT_EXECUTE;
-        case 17: return CRUD_FIND;
-        case 18: return CRUD_INSERT;
-        case 19: return CRUD_UPDATE;
-        case 20: return CRUD_DELETE;
-        case 24: return EXPECT_OPEN;
-        case 25: return EXPECT_CLOSE;
-        case 100: return EXEC_PLAN_READ;
-        case 101: return EXEC_SQL;
-        case 102: return GALAXY_PREPARE_EXECUTE;
-        case 110: return SESS_NEW;
-        case 111: return SESS_KILL;
-        case 112: return TOKEN_OFFER;
-        case 113: return GET_TSO;
-        case 115: return AUTO_SP;
-        case 116: return FILE_OPERATION_GET_FILE_INFO;
-        case 117: return FILE_OPERATION_TRANSFER_FILE_DATA;
-        case 118: return FILE_OPERATION_FILE_MANAGE;
-        case 127: return MSG_MAX;
-        default: return null;
+          case 1: return CON_CAPABILITIES_GET;
+          case 2: return CON_CAPABILITIES_SET;
+          case 3: return CON_CLOSE;
+          case 4: return SESS_AUTHENTICATE_START;
+          case 5: return SESS_AUTHENTICATE_CONTINUE;
+          case 6: return SESS_RESET;
+          case 7: return SESS_CLOSE;
+          case 12: return SQL_STMT_EXECUTE;
+          case 17: return CRUD_FIND;
+          case 18: return CRUD_INSERT;
+          case 19: return CRUD_UPDATE;
+          case 20: return CRUD_DELETE;
+          case 24: return EXPECT_OPEN;
+          case 25: return EXPECT_CLOSE;
+          case 100: return EXEC_PLAN_READ;
+          case 101: return EXEC_SQL;
+          case 102: return GALAXY_PREPARE_EXECUTE;
+          case 110: return SESS_NEW;
+          case 111: return SESS_KILL;
+          case 112: return TOKEN_OFFER;
+          case 113: return GET_TSO;
+          case 115: return AUTO_SP;
+          case 116: return FILE_OPERATION_GET_FILE_INFO;
+          case 117: return FILE_OPERATION_TRANSFER_FILE_DATA;
+          case 118: return FILE_OPERATION_FILE_MANAGE;
+          case 127: return MSG_MAX;
+          default: return null;
         }
       }
 
       public static com.google.protobuf.Internal.EnumLiteMap<Type>
-      internalGetValueMap() {
+          internalGetValueMap() {
         return internalValueMap;
       }
       private static final com.google.protobuf.Internal.EnumLiteMap<
           Type> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-            public Type findValueByNumber(int number) {
-              return Type.forNumber(number);
-            }
-          };
+            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
+              public Type findValueByNumber(int number) {
+                return Type.forNumber(number);
+              }
+            };
 
       public final com.google.protobuf.Descriptors.EnumValueDescriptor
-      getValueDescriptor() {
+          getValueDescriptor() {
         return getDescriptor().getValues().get(ordinal());
       }
       public final com.google.protobuf.Descriptors.EnumDescriptor
-      getDescriptorForType() {
+          getDescriptorForType() {
         return getDescriptor();
       }
       public static final com.google.protobuf.Descriptors.EnumDescriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.mysql.cj.x.protobuf.Polarx.ClientMessages.getDescriptor().getEnumTypes().get(0);
       }
 
@@ -417,7 +417,7 @@ public final class Polarx {
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
           throw new java.lang.IllegalArgumentException(
-              "EnumValueDescriptor is not for this type.");
+            "EnumValueDescriptor is not for this type.");
         }
         return VALUES[desc.getIndex()];
       }
@@ -444,7 +444,7 @@ public final class Polarx {
 
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-        throws java.io.IOException {
+                        throws java.io.IOException {
       unknownFields.writeTo(output);
     }
 
@@ -462,7 +462,7 @@ public final class Polarx {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof com.mysql.cj.x.protobuf.Polarx.ClientMessages)) {
         return super.equals(obj);
@@ -591,13 +591,13 @@ public final class Polarx {
         // @@protoc_insertion_point(builder_implements:Polarx.ClientMessages)
         com.mysql.cj.x.protobuf.Polarx.ClientMessagesOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_ClientMessages_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
+          internalGetFieldAccessorTable() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_ClientMessages_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.mysql.cj.x.protobuf.Polarx.ClientMessages.class, com.mysql.cj.x.protobuf.Polarx.ClientMessages.Builder.class);
@@ -615,7 +615,7 @@ public final class Polarx {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
-            .alwaysUseFieldBuilders) {
+                .alwaysUseFieldBuilders) {
         }
       }
       @java.lang.Override
@@ -626,7 +626,7 @@ public final class Polarx {
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-      getDescriptorForType() {
+          getDescriptorForType() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_ClientMessages_descriptor;
       }
 
@@ -795,7 +795,7 @@ public final class Polarx {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:Polarx.ServerMessages)
       ServerMessagesOrBuilder {
-    private static final long serialVersionUID = 0L;
+  private static final long serialVersionUID = 0L;
     // Use ServerMessages.newBuilder() to construct.
     private ServerMessages(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -830,16 +830,16 @@ public final class Polarx {
         while (!done) {
           int tag = input.readTag();
           switch (tag) {
-          case 0:
-            done = true;
-            break;
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
+            case 0:
               done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
             }
-            break;
-          }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -853,13 +853,13 @@ public final class Polarx {
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
+        getDescriptor() {
       return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_ServerMessages_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-    internalGetFieldAccessorTable() {
+        internalGetFieldAccessorTable() {
       return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_ServerMessages_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.mysql.cj.x.protobuf.Polarx.ServerMessages.class, com.mysql.cj.x.protobuf.Polarx.ServerMessages.Builder.class);
@@ -1054,51 +1054,51 @@ public final class Polarx {
        */
       public static Type forNumber(int value) {
         switch (value) {
-        case 0: return OK;
-        case 1: return ERROR;
-        case 2: return CONN_CAPABILITIES;
-        case 3: return SESS_AUTHENTICATE_CONTINUE;
-        case 4: return SESS_AUTHENTICATE_OK;
-        case 11: return NOTICE;
-        case 12: return RESULTSET_COLUMN_META_DATA;
-        case 13: return RESULTSET_ROW;
-        case 14: return RESULTSET_FETCH_DONE;
-        case 15: return RESULTSET_FETCH_SUSPENDED;
-        case 16: return RESULTSET_FETCH_DONE_MORE_RESULTSETS;
-        case 17: return SQL_STMT_EXECUTE_OK;
-        case 18: return RESULTSET_FETCH_DONE_MORE_OUT_PARAMS;
-        case 19: return RESULTSET_TOKEN_DONE;
-        case 20: return RESULTSET_TSO;
-        case 21: return RESULTSET_CHUNK;
-        case 22: return RESULTSET_GET_FILE_INFO_OK;
-        case 23: return RESULTSET_TRANSFER_FILE_DATA_OK;
-        case 24: return RESULTSET_FILE_MANAGE_OK;
-        default: return null;
+          case 0: return OK;
+          case 1: return ERROR;
+          case 2: return CONN_CAPABILITIES;
+          case 3: return SESS_AUTHENTICATE_CONTINUE;
+          case 4: return SESS_AUTHENTICATE_OK;
+          case 11: return NOTICE;
+          case 12: return RESULTSET_COLUMN_META_DATA;
+          case 13: return RESULTSET_ROW;
+          case 14: return RESULTSET_FETCH_DONE;
+          case 15: return RESULTSET_FETCH_SUSPENDED;
+          case 16: return RESULTSET_FETCH_DONE_MORE_RESULTSETS;
+          case 17: return SQL_STMT_EXECUTE_OK;
+          case 18: return RESULTSET_FETCH_DONE_MORE_OUT_PARAMS;
+          case 19: return RESULTSET_TOKEN_DONE;
+          case 20: return RESULTSET_TSO;
+          case 21: return RESULTSET_CHUNK;
+          case 22: return RESULTSET_GET_FILE_INFO_OK;
+          case 23: return RESULTSET_TRANSFER_FILE_DATA_OK;
+          case 24: return RESULTSET_FILE_MANAGE_OK;
+          default: return null;
         }
       }
 
       public static com.google.protobuf.Internal.EnumLiteMap<Type>
-      internalGetValueMap() {
+          internalGetValueMap() {
         return internalValueMap;
       }
       private static final com.google.protobuf.Internal.EnumLiteMap<
           Type> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-            public Type findValueByNumber(int number) {
-              return Type.forNumber(number);
-            }
-          };
+            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
+              public Type findValueByNumber(int number) {
+                return Type.forNumber(number);
+              }
+            };
 
       public final com.google.protobuf.Descriptors.EnumValueDescriptor
-      getValueDescriptor() {
+          getValueDescriptor() {
         return getDescriptor().getValues().get(ordinal());
       }
       public final com.google.protobuf.Descriptors.EnumDescriptor
-      getDescriptorForType() {
+          getDescriptorForType() {
         return getDescriptor();
       }
       public static final com.google.protobuf.Descriptors.EnumDescriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.mysql.cj.x.protobuf.Polarx.ServerMessages.getDescriptor().getEnumTypes().get(0);
       }
 
@@ -1108,7 +1108,7 @@ public final class Polarx {
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
           throw new java.lang.IllegalArgumentException(
-              "EnumValueDescriptor is not for this type.");
+            "EnumValueDescriptor is not for this type.");
         }
         return VALUES[desc.getIndex()];
       }
@@ -1135,7 +1135,7 @@ public final class Polarx {
 
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-        throws java.io.IOException {
+                        throws java.io.IOException {
       unknownFields.writeTo(output);
     }
 
@@ -1153,7 +1153,7 @@ public final class Polarx {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof com.mysql.cj.x.protobuf.Polarx.ServerMessages)) {
         return super.equals(obj);
@@ -1282,13 +1282,13 @@ public final class Polarx {
         // @@protoc_insertion_point(builder_implements:Polarx.ServerMessages)
         com.mysql.cj.x.protobuf.Polarx.ServerMessagesOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_ServerMessages_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
+          internalGetFieldAccessorTable() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_ServerMessages_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.mysql.cj.x.protobuf.Polarx.ServerMessages.class, com.mysql.cj.x.protobuf.Polarx.ServerMessages.Builder.class);
@@ -1306,7 +1306,7 @@ public final class Polarx {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
-            .alwaysUseFieldBuilders) {
+                .alwaysUseFieldBuilders) {
         }
       }
       @java.lang.Override
@@ -1317,7 +1317,7 @@ public final class Polarx {
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-      getDescriptorForType() {
+          getDescriptorForType() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_ServerMessages_descriptor;
       }
 
@@ -1486,7 +1486,7 @@ public final class Polarx {
      * @return The bytes for msg.
      */
     com.google.protobuf.ByteString
-    getMsgBytes();
+        getMsgBytes();
   }
   /**
    * <pre>
@@ -1499,7 +1499,7 @@ public final class Polarx {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:Polarx.Ok)
       OkOrBuilder {
-    private static final long serialVersionUID = 0L;
+  private static final long serialVersionUID = 0L;
     // Use Ok.newBuilder() to construct.
     private Ok(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -1536,22 +1536,22 @@ public final class Polarx {
         while (!done) {
           int tag = input.readTag();
           switch (tag) {
-          case 0:
-            done = true;
-            break;
-          case 10: {
-            com.google.protobuf.ByteString bs = input.readBytes();
-            bitField0_ |= 0x00000001;
-            msg_ = bs;
-            break;
-          }
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
+            case 0:
               done = true;
+              break;
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              msg_ = bs;
+              break;
             }
-            break;
-          }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -1565,13 +1565,13 @@ public final class Polarx {
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
+        getDescriptor() {
       return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_Ok_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-    internalGetFieldAccessorTable() {
+        internalGetFieldAccessorTable() {
       return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_Ok_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.mysql.cj.x.protobuf.Polarx.Ok.class, com.mysql.cj.x.protobuf.Polarx.Ok.Builder.class);
@@ -1596,7 +1596,7 @@ public final class Polarx {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -1610,10 +1610,10 @@ public final class Polarx {
      * @return The bytes for msg.
      */
     public com.google.protobuf.ByteString
-    getMsgBytes() {
+        getMsgBytes() {
       java.lang.Object ref = msg_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         msg_ = b;
@@ -1636,7 +1636,7 @@ public final class Polarx {
 
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-        throws java.io.IOException {
+                        throws java.io.IOException {
       if (((bitField0_ & 0x00000001) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, msg_);
       }
@@ -1660,7 +1660,7 @@ public final class Polarx {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof com.mysql.cj.x.protobuf.Polarx.Ok)) {
         return super.equals(obj);
@@ -1794,13 +1794,13 @@ public final class Polarx {
         // @@protoc_insertion_point(builder_implements:Polarx.Ok)
         com.mysql.cj.x.protobuf.Polarx.OkOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_Ok_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
+          internalGetFieldAccessorTable() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_Ok_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.mysql.cj.x.protobuf.Polarx.Ok.class, com.mysql.cj.x.protobuf.Polarx.Ok.Builder.class);
@@ -1818,7 +1818,7 @@ public final class Polarx {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
-            .alwaysUseFieldBuilders) {
+                .alwaysUseFieldBuilders) {
         }
       }
       @java.lang.Override
@@ -1831,7 +1831,7 @@ public final class Polarx {
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-      getDescriptorForType() {
+          getDescriptorForType() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_Ok_descriptor;
       }
 
@@ -1973,10 +1973,10 @@ public final class Polarx {
        * @return The bytes for msg.
        */
       public com.google.protobuf.ByteString
-      getMsgBytes() {
+          getMsgBytes() {
         java.lang.Object ref = msg_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           msg_ = b;
@@ -1993,9 +1993,9 @@ public final class Polarx {
       public Builder setMsg(
           java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000001;
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         msg_ = value;
         onChanged();
         return this;
@@ -2018,9 +2018,9 @@ public final class Polarx {
       public Builder setMsgBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000001;
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         msg_ = value;
         onChanged();
         return this;
@@ -2119,7 +2119,7 @@ public final class Polarx {
      * @return The bytes for sqlState.
      */
     com.google.protobuf.ByteString
-    getSqlStateBytes();
+        getSqlStateBytes();
 
     /**
      * <code>required string msg = 3;</code>
@@ -2136,7 +2136,7 @@ public final class Polarx {
      * @return The bytes for msg.
      */
     com.google.protobuf.ByteString
-    getMsgBytes();
+        getMsgBytes();
   }
   /**
    * <pre>
@@ -2158,7 +2158,7 @@ public final class Polarx {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:Polarx.Error)
       ErrorOrBuilder {
-    private static final long serialVersionUID = 0L;
+  private static final long serialVersionUID = 0L;
     // Use Error.newBuilder() to construct.
     private Error(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -2197,45 +2197,45 @@ public final class Polarx {
         while (!done) {
           int tag = input.readTag();
           switch (tag) {
-          case 0:
-            done = true;
-            break;
-          case 8: {
-            int rawValue = input.readEnum();
-            @SuppressWarnings("deprecation")
-            com.mysql.cj.x.protobuf.Polarx.Error.Severity value = com.mysql.cj.x.protobuf.Polarx.Error.Severity.valueOf(rawValue);
-            if (value == null) {
-              unknownFields.mergeVarintField(1, rawValue);
-            } else {
-              bitField0_ |= 0x00000001;
-              severity_ = rawValue;
-            }
-            break;
-          }
-          case 16: {
-            bitField0_ |= 0x00000002;
-            code_ = input.readUInt32();
-            break;
-          }
-          case 26: {
-            com.google.protobuf.ByteString bs = input.readBytes();
-            bitField0_ |= 0x00000008;
-            msg_ = bs;
-            break;
-          }
-          case 34: {
-            com.google.protobuf.ByteString bs = input.readBytes();
-            bitField0_ |= 0x00000004;
-            sqlState_ = bs;
-            break;
-          }
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
+            case 0:
               done = true;
+              break;
+            case 8: {
+              int rawValue = input.readEnum();
+                @SuppressWarnings("deprecation")
+              com.mysql.cj.x.protobuf.Polarx.Error.Severity value = com.mysql.cj.x.protobuf.Polarx.Error.Severity.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(1, rawValue);
+              } else {
+                bitField0_ |= 0x00000001;
+                severity_ = rawValue;
+              }
+              break;
             }
-            break;
-          }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              code_ = input.readUInt32();
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
+              msg_ = bs;
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              sqlState_ = bs;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -2249,13 +2249,13 @@ public final class Polarx {
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
+        getDescriptor() {
       return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_Error_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-    internalGetFieldAccessorTable() {
+        internalGetFieldAccessorTable() {
       return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_Error_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.mysql.cj.x.protobuf.Polarx.Error.class, com.mysql.cj.x.protobuf.Polarx.Error.Builder.class);
@@ -2306,34 +2306,34 @@ public final class Polarx {
        */
       public static Severity forNumber(int value) {
         switch (value) {
-        case 0: return ERROR;
-        case 1: return FATAL;
-        default: return null;
+          case 0: return ERROR;
+          case 1: return FATAL;
+          default: return null;
         }
       }
 
       public static com.google.protobuf.Internal.EnumLiteMap<Severity>
-      internalGetValueMap() {
+          internalGetValueMap() {
         return internalValueMap;
       }
       private static final com.google.protobuf.Internal.EnumLiteMap<
           Severity> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<Severity>() {
-            public Severity findValueByNumber(int number) {
-              return Severity.forNumber(number);
-            }
-          };
+            new com.google.protobuf.Internal.EnumLiteMap<Severity>() {
+              public Severity findValueByNumber(int number) {
+                return Severity.forNumber(number);
+              }
+            };
 
       public final com.google.protobuf.Descriptors.EnumValueDescriptor
-      getValueDescriptor() {
+          getValueDescriptor() {
         return getDescriptor().getValues().get(ordinal());
       }
       public final com.google.protobuf.Descriptors.EnumDescriptor
-      getDescriptorForType() {
+          getDescriptorForType() {
         return getDescriptor();
       }
       public static final com.google.protobuf.Descriptors.EnumDescriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.mysql.cj.x.protobuf.Polarx.Error.getDescriptor().getEnumTypes().get(0);
       }
 
@@ -2343,7 +2343,7 @@ public final class Polarx {
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
           throw new java.lang.IllegalArgumentException(
-              "EnumValueDescriptor is not for this type.");
+            "EnumValueDescriptor is not for this type.");
         }
         return VALUES[desc.getIndex()];
       }
@@ -2412,7 +2412,7 @@ public final class Polarx {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -2426,10 +2426,10 @@ public final class Polarx {
      * @return The bytes for sqlState.
      */
     public com.google.protobuf.ByteString
-    getSqlStateBytes() {
+        getSqlStateBytes() {
       java.lang.Object ref = sqlState_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         sqlState_ = b;
@@ -2457,7 +2457,7 @@ public final class Polarx {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -2471,10 +2471,10 @@ public final class Polarx {
      * @return The bytes for msg.
      */
     public com.google.protobuf.ByteString
-    getMsgBytes() {
+        getMsgBytes() {
       java.lang.Object ref = msg_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         msg_ = b;
@@ -2509,7 +2509,7 @@ public final class Polarx {
 
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-        throws java.io.IOException {
+                        throws java.io.IOException {
       if (((bitField0_ & 0x00000001) != 0)) {
         output.writeEnum(1, severity_);
       }
@@ -2533,11 +2533,11 @@ public final class Polarx {
       size = 0;
       if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-            .computeEnumSize(1, severity_);
+          .computeEnumSize(1, severity_);
       }
       if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-            .computeUInt32Size(2, code_);
+          .computeUInt32Size(2, code_);
       }
       if (((bitField0_ & 0x00000008) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, msg_);
@@ -2553,7 +2553,7 @@ public final class Polarx {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof com.mysql.cj.x.protobuf.Polarx.Error)) {
         return super.equals(obj);
@@ -2722,13 +2722,13 @@ public final class Polarx {
         // @@protoc_insertion_point(builder_implements:Polarx.Error)
         com.mysql.cj.x.protobuf.Polarx.ErrorOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_Error_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
+          internalGetFieldAccessorTable() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_Error_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.mysql.cj.x.protobuf.Polarx.Error.class, com.mysql.cj.x.protobuf.Polarx.Error.Builder.class);
@@ -2746,7 +2746,7 @@ public final class Polarx {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
-            .alwaysUseFieldBuilders) {
+                .alwaysUseFieldBuilders) {
         }
       }
       @java.lang.Override
@@ -2765,7 +2765,7 @@ public final class Polarx {
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-      getDescriptorForType() {
+          getDescriptorForType() {
         return com.mysql.cj.x.protobuf.Polarx.internal_static_Polarx_Error_descriptor;
       }
 
@@ -3018,10 +3018,10 @@ public final class Polarx {
        * @return The bytes for sqlState.
        */
       public com.google.protobuf.ByteString
-      getSqlStateBytes() {
+          getSqlStateBytes() {
         java.lang.Object ref = sqlState_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           sqlState_ = b;
@@ -3038,9 +3038,9 @@ public final class Polarx {
       public Builder setSqlState(
           java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000004;
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
         sqlState_ = value;
         onChanged();
         return this;
@@ -3063,9 +3063,9 @@ public final class Polarx {
       public Builder setSqlStateBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000004;
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
         sqlState_ = value;
         onChanged();
         return this;
@@ -3102,10 +3102,10 @@ public final class Polarx {
        * @return The bytes for msg.
        */
       public com.google.protobuf.ByteString
-      getMsgBytes() {
+          getMsgBytes() {
         java.lang.Object ref = msg_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           msg_ = b;
@@ -3122,9 +3122,9 @@ public final class Polarx {
       public Builder setMsg(
           java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000008;
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
         msg_ = value;
         onChanged();
         return this;
@@ -3147,9 +3147,9 @@ public final class Polarx {
       public Builder setMsgBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000008;
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
         msg_ = value;
         onChanged();
         return this;
@@ -3208,94 +3208,94 @@ public final class Polarx {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-      internal_static_Polarx_ClientMessages_descriptor;
-  private static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    internal_static_Polarx_ClientMessages_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Polarx_ClientMessages_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-      internal_static_Polarx_ServerMessages_descriptor;
-  private static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    internal_static_Polarx_ServerMessages_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Polarx_ServerMessages_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-      internal_static_Polarx_Ok_descriptor;
-  private static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    internal_static_Polarx_Ok_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Polarx_Ok_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-      internal_static_Polarx_Error_descriptor;
-  private static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    internal_static_Polarx_Error_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Polarx_Error_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
-  getDescriptor() {
+      getDescriptor() {
     return descriptor;
   }
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-        "\n\014polarx.proto\022\006Polarx\"\260\004\n\016ClientMessage" +
-            "s\"\235\004\n\004Type\022\030\n\024CON_CAPABILITIES_GET\020\001\022\030\n\024" +
-            "CON_CAPABILITIES_SET\020\002\022\r\n\tCON_CLOSE\020\003\022\033\n" +
-            "\027SESS_AUTHENTICATE_START\020\004\022\036\n\032SESS_AUTHE" +
-            "NTICATE_CONTINUE\020\005\022\016\n\nSESS_RESET\020\006\022\016\n\nSE" +
-            "SS_CLOSE\020\007\022\024\n\020SQL_STMT_EXECUTE\020\014\022\r\n\tCRUD" +
-            "_FIND\020\021\022\017\n\013CRUD_INSERT\020\022\022\017\n\013CRUD_UPDATE\020" +
-            "\023\022\017\n\013CRUD_DELETE\020\024\022\017\n\013EXPECT_OPEN\020\030\022\020\n\014E" +
-            "XPECT_CLOSE\020\031\022\022\n\016EXEC_PLAN_READ\020d\022\014\n\010EXE" +
-            "C_SQL\020e\022\032\n\026GALAXY_PREPARE_EXECUTE\020f\022\014\n\010S" +
-            "ESS_NEW\020n\022\r\n\tSESS_KILL\020o\022\017\n\013TOKEN_OFFER\020" +
-            "p\022\013\n\007GET_TSO\020q\022\013\n\007AUTO_SP\020s\022 \n\034FILE_OPER" +
-            "ATION_GET_FILE_INFO\020t\022%\n!FILE_OPERATION_" +
-            "TRANSFER_FILE_DATA\020u\022\036\n\032FILE_OPERATION_F" +
-            "ILE_MANAGE\020v\022\013\n\007MSG_MAX\020\177\"\207\004\n\016ServerMess" +
-            "ages\"\364\003\n\004Type\022\006\n\002OK\020\000\022\t\n\005ERROR\020\001\022\025\n\021CONN" +
-            "_CAPABILITIES\020\002\022\036\n\032SESS_AUTHENTICATE_CON" +
-            "TINUE\020\003\022\030\n\024SESS_AUTHENTICATE_OK\020\004\022\n\n\006NOT" +
-            "ICE\020\013\022\036\n\032RESULTSET_COLUMN_META_DATA\020\014\022\021\n" +
-            "\rRESULTSET_ROW\020\r\022\030\n\024RESULTSET_FETCH_DONE" +
-            "\020\016\022\035\n\031RESULTSET_FETCH_SUSPENDED\020\017\022(\n$RES" +
-            "ULTSET_FETCH_DONE_MORE_RESULTSETS\020\020\022\027\n\023S" +
-            "QL_STMT_EXECUTE_OK\020\021\022(\n$RESULTSET_FETCH_" +
-            "DONE_MORE_OUT_PARAMS\020\022\022\030\n\024RESULTSET_TOKE" +
-            "N_DONE\020\023\022\021\n\rRESULTSET_TSO\020\024\022\023\n\017RESULTSET" +
-            "_CHUNK\020\025\022\036\n\032RESULTSET_GET_FILE_INFO_OK\020\026" +
-            "\022#\n\037RESULTSET_TRANSFER_FILE_DATA_OK\020\027\022\034\n" +
-            "\030RESULTSET_FILE_MANAGE_OK\020\030\"\021\n\002Ok\022\013\n\003msg" +
-            "\030\001 \001(\t\"\210\001\n\005Error\022/\n\010severity\030\001 \001(\0162\026.Pol" +
-            "arx.Error.Severity:\005ERROR\022\014\n\004code\030\002 \002(\r\022" +
-            "\021\n\tsql_state\030\004 \002(\t\022\013\n\003msg\030\003 \002(\t\" \n\010Sever" +
-            "ity\022\t\n\005ERROR\020\000\022\t\n\005FATAL\020\001B\031\n\027com.mysql.c" +
-            "j.x.protobuf"
+      "\n\014polarx.proto\022\006Polarx\"\260\004\n\016ClientMessage" +
+      "s\"\235\004\n\004Type\022\030\n\024CON_CAPABILITIES_GET\020\001\022\030\n\024" +
+      "CON_CAPABILITIES_SET\020\002\022\r\n\tCON_CLOSE\020\003\022\033\n" +
+      "\027SESS_AUTHENTICATE_START\020\004\022\036\n\032SESS_AUTHE" +
+      "NTICATE_CONTINUE\020\005\022\016\n\nSESS_RESET\020\006\022\016\n\nSE" +
+      "SS_CLOSE\020\007\022\024\n\020SQL_STMT_EXECUTE\020\014\022\r\n\tCRUD" +
+      "_FIND\020\021\022\017\n\013CRUD_INSERT\020\022\022\017\n\013CRUD_UPDATE\020" +
+      "\023\022\017\n\013CRUD_DELETE\020\024\022\017\n\013EXPECT_OPEN\020\030\022\020\n\014E" +
+      "XPECT_CLOSE\020\031\022\022\n\016EXEC_PLAN_READ\020d\022\014\n\010EXE" +
+      "C_SQL\020e\022\032\n\026GALAXY_PREPARE_EXECUTE\020f\022\014\n\010S" +
+      "ESS_NEW\020n\022\r\n\tSESS_KILL\020o\022\017\n\013TOKEN_OFFER\020" +
+      "p\022\013\n\007GET_TSO\020q\022\013\n\007AUTO_SP\020s\022 \n\034FILE_OPER" +
+      "ATION_GET_FILE_INFO\020t\022%\n!FILE_OPERATION_" +
+      "TRANSFER_FILE_DATA\020u\022\036\n\032FILE_OPERATION_F" +
+      "ILE_MANAGE\020v\022\013\n\007MSG_MAX\020\177\"\207\004\n\016ServerMess" +
+      "ages\"\364\003\n\004Type\022\006\n\002OK\020\000\022\t\n\005ERROR\020\001\022\025\n\021CONN" +
+      "_CAPABILITIES\020\002\022\036\n\032SESS_AUTHENTICATE_CON" +
+      "TINUE\020\003\022\030\n\024SESS_AUTHENTICATE_OK\020\004\022\n\n\006NOT" +
+      "ICE\020\013\022\036\n\032RESULTSET_COLUMN_META_DATA\020\014\022\021\n" +
+      "\rRESULTSET_ROW\020\r\022\030\n\024RESULTSET_FETCH_DONE" +
+      "\020\016\022\035\n\031RESULTSET_FETCH_SUSPENDED\020\017\022(\n$RES" +
+      "ULTSET_FETCH_DONE_MORE_RESULTSETS\020\020\022\027\n\023S" +
+      "QL_STMT_EXECUTE_OK\020\021\022(\n$RESULTSET_FETCH_" +
+      "DONE_MORE_OUT_PARAMS\020\022\022\030\n\024RESULTSET_TOKE" +
+      "N_DONE\020\023\022\021\n\rRESULTSET_TSO\020\024\022\023\n\017RESULTSET" +
+      "_CHUNK\020\025\022\036\n\032RESULTSET_GET_FILE_INFO_OK\020\026" +
+      "\022#\n\037RESULTSET_TRANSFER_FILE_DATA_OK\020\027\022\034\n" +
+      "\030RESULTSET_FILE_MANAGE_OK\020\030\"\021\n\002Ok\022\013\n\003msg" +
+      "\030\001 \001(\t\"\210\001\n\005Error\022/\n\010severity\030\001 \001(\0162\026.Pol" +
+      "arx.Error.Severity:\005ERROR\022\014\n\004code\030\002 \002(\r\022" +
+      "\021\n\tsql_state\030\004 \002(\t\022\013\n\003msg\030\003 \002(\t\" \n\010Sever" +
+      "ity\022\t\n\005ERROR\020\000\022\t\n\005FATAL\020\001B\031\n\027com.mysql.c" +
+      "j.x.protobuf"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
-        .internalBuildGeneratedFileFrom(descriptorData,
-            new com.google.protobuf.Descriptors.FileDescriptor[] {
-            });
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        });
     internal_static_Polarx_ClientMessages_descriptor =
-        getDescriptor().getMessageTypes().get(0);
+      getDescriptor().getMessageTypes().get(0);
     internal_static_Polarx_ClientMessages_fieldAccessorTable = new
-        com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Polarx_ClientMessages_descriptor,
         new java.lang.String[] { });
     internal_static_Polarx_ServerMessages_descriptor =
-        getDescriptor().getMessageTypes().get(1);
+      getDescriptor().getMessageTypes().get(1);
     internal_static_Polarx_ServerMessages_fieldAccessorTable = new
-        com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Polarx_ServerMessages_descriptor,
         new java.lang.String[] { });
     internal_static_Polarx_Ok_descriptor =
-        getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(2);
     internal_static_Polarx_Ok_fieldAccessorTable = new
-        com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Polarx_Ok_descriptor,
         new java.lang.String[] { "Msg", });
     internal_static_Polarx_Error_descriptor =
-        getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_Polarx_Error_fieldAccessorTable = new
-        com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Polarx_Error_descriptor,
         new java.lang.String[] { "Severity", "Code", "SqlState", "Msg", });
   }

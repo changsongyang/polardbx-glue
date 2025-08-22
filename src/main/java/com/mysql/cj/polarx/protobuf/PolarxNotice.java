@@ -3027,13 +3027,17 @@ public final class PolarxNotice {
        */
       PRODUCED_MESSAGE(10),
       /**
+       * <code>CLIENT_ID_ASSIGNED = 11;</code>
+       */
+      CLIENT_ID_ASSIGNED(11),
+      /**
        * <pre>
        * .. more to be added
        * </pre>
        *
-       * <code>CLIENT_ID_ASSIGNED = 11;</code>
+       * <code>EXTRA_SERVER_STATE = 12;</code>
        */
-      CLIENT_ID_ASSIGNED(11),
+      EXTRA_SERVER_STATE(12),
       ;
 
       /**
@@ -3073,13 +3077,17 @@ public final class PolarxNotice {
        */
       public static final int PRODUCED_MESSAGE_VALUE = 10;
       /**
+       * <code>CLIENT_ID_ASSIGNED = 11;</code>
+       */
+      public static final int CLIENT_ID_ASSIGNED_VALUE = 11;
+      /**
        * <pre>
        * .. more to be added
        * </pre>
        *
-       * <code>CLIENT_ID_ASSIGNED = 11;</code>
+       * <code>EXTRA_SERVER_STATE = 12;</code>
        */
-      public static final int CLIENT_ID_ASSIGNED_VALUE = 11;
+      public static final int EXTRA_SERVER_STATE_VALUE = 12;
 
 
       public final int getNumber() {
@@ -3112,6 +3120,7 @@ public final class PolarxNotice {
           case 9: return TRX_ROLLEDBACK;
           case 10: return PRODUCED_MESSAGE;
           case 11: return CLIENT_ID_ASSIGNED;
+          case 12: return EXTRA_SERVER_STATE;
           default: return null;
         }
       }
@@ -3159,6 +3168,101 @@ public final class PolarxNotice {
       }
 
       // @@protoc_insertion_point(enum_scope:Polarx.Notice.SessionStateChanged.Parameter)
+    }
+
+    /**
+     * Protobuf enum {@code Polarx.Notice.SessionStateChanged.ExtraServerState}
+     */
+    public enum ExtraServerState
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <pre>
+       * .. more to be added
+       * </pre>
+       *
+       * <code>IN_LEADER_TRANSFER_FLAG = 1;</code>
+       */
+      IN_LEADER_TRANSFER_FLAG(1),
+      ;
+
+      /**
+       * <pre>
+       * .. more to be added
+       * </pre>
+       *
+       * <code>IN_LEADER_TRANSFER_FLAG = 1;</code>
+       */
+      public static final int IN_LEADER_TRANSFER_FLAG_VALUE = 1;
+
+
+      public final int getNumber() {
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static ExtraServerState valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static ExtraServerState forNumber(int value) {
+        switch (value) {
+          case 1: return IN_LEADER_TRANSFER_FLAG;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<ExtraServerState>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          ExtraServerState> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<ExtraServerState>() {
+              public ExtraServerState findValueByNumber(int number) {
+                return ExtraServerState.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return com.mysql.cj.polarx.protobuf.PolarxNotice.SessionStateChanged.getDescriptor().getEnumTypes().get(1);
+      }
+
+      private static final ExtraServerState[] VALUES = values();
+
+      public static ExtraServerState valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private ExtraServerState(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:Polarx.Notice.SessionStateChanged.ExtraServerState)
     }
 
     private int bitField0_;
@@ -3837,16 +3941,18 @@ public final class PolarxNotice {
       "\n\003msg\030\003 \002(\t\")\n\005Level\022\010\n\004NOTE\020\001\022\013\n\007WARNIN" +
       "G\020\002\022\t\n\005ERROR\020\003\"P\n\026SessionVariableChanged" +
       "\022\r\n\005param\030\001 \002(\t\022\'\n\005value\030\002 \001(\0132\030.Polarx." +
-      "Datatypes.Scalar\"\325\002\n\023SessionStateChanged" +
+      "Datatypes.Scalar\"\236\003\n\023SessionStateChanged" +
       "\022;\n\005param\030\001 \002(\0162,.Polarx.Notice.SessionS" +
       "tateChanged.Parameter\022\'\n\005value\030\002 \001(\0132\030.P" +
-      "olarx.Datatypes.Scalar\"\327\001\n\tParameter\022\022\n\016" +
+      "olarx.Datatypes.Scalar\"\357\001\n\tParameter\022\022\n\016" +
       "CURRENT_SCHEMA\020\001\022\023\n\017ACCOUNT_EXPIRED\020\002\022\027\n" +
       "\023GENERATED_INSERT_ID\020\003\022\021\n\rROWS_AFFECTED\020" +
       "\004\022\016\n\nROWS_FOUND\020\005\022\020\n\014ROWS_MATCHED\020\006\022\021\n\rT" +
       "RX_COMMITTED\020\007\022\022\n\016TRX_ROLLEDBACK\020\t\022\024\n\020PR" +
       "ODUCED_MESSAGE\020\n\022\026\n\022CLIENT_ID_ASSIGNED\020\013" +
-      "B\036\n\034com.mysql.cj.polarx.protobuf"
+      "\022\026\n\022EXTRA_SERVER_STATE\020\014\"/\n\020ExtraServerS" +
+      "tate\022\033\n\027IN_LEADER_TRANSFER_FLAG\020\001B\036\n\034com" +
+      ".mysql.cj.polarx.protobuf"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

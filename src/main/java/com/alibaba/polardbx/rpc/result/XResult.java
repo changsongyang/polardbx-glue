@@ -31,8 +31,8 @@ import com.alibaba.polardbx.rpc.packet.XPacketQueue;
 import com.alibaba.polardbx.rpc.pool.XConnection;
 import com.alibaba.polardbx.rpc.pool.XConnectionManager;
 import com.google.protobuf.ByteString;
-import com.mysql.cj.polarx.protobuf.PolarxPhysicalBackfill;
 import com.mysql.cj.polarx.protobuf.PolarxNotice;
+import com.mysql.cj.polarx.protobuf.PolarxPhysicalBackfill;
 import com.mysql.cj.polarx.protobuf.PolarxResultset;
 import com.mysql.cj.x.protobuf.Polarx;
 import com.mysql.cj.x.protobuf.PolarxDatatypes;
@@ -141,6 +141,9 @@ public class XResult implements AutoCloseable {
     // Feedback.
     private long examinedRowCount = -1;
     private List<String[]> chosenIndexes = null;
+
+    // for error and request collect
+    private int errorCode = 0;
 
     public XResult(XConnection connection, XPacketQueue pipe, XResult previous,
                    long startNanos, long queryTimeoutNanos, long totalTimeoutNanos, boolean ignoreResult,
@@ -439,6 +442,7 @@ public class XResult implements AutoCloseable {
             if (finishNanos >= 0) {
                 connection.getDataSource().getTotalPhysicalTime().getAndAdd(finishNanos / 1000L);
             }
+            connection.getDataSource().getSwitchoverPerfCollector().record(isDone() ? errorCode : -1);
         } catch (Throwable ignore) {
         }
 
@@ -1006,10 +1010,13 @@ public class XResult implements AutoCloseable {
                             throw new MySQLIntegrityConstraintViolationException(
                                 error.getMsg(), error.getSqlState(), error.getCode());
                         } else {
+                            // only record SQL error(exclude constraint violation)
+                            errorCode = error.getCode();
                             throw new SQLException(error.getMsg(), error.getSqlState(), error.getCode());
                         }
                     } else {
                         // Fatal error.
+                        errorCode = error.getCode();
                         status = ResultStatus.XResultFatal;
                         finishNanos = gotPktNanos - startNanos;
                         throw (SQLException) session.setLastException(

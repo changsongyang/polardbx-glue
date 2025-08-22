@@ -22,6 +22,8 @@ import com.alibaba.polardbx.common.exception.TddlNestableRuntimeException;
 import com.alibaba.polardbx.common.exception.TddlRuntimeException;
 import com.alibaba.polardbx.common.exception.code.ErrorCode;
 import com.alibaba.polardbx.common.properties.DynamicConfig;
+import com.alibaba.polardbx.common.utils.logger.Logger;
+import com.alibaba.polardbx.common.utils.logger.LoggerFactory;
 import com.alibaba.polardbx.rpc.XConfig;
 import com.alibaba.polardbx.rpc.XLog;
 import com.alibaba.polardbx.rpc.client.XClient;
@@ -33,7 +35,9 @@ import com.alibaba.polardbx.rpc.perf.SessionPerfItem;
 import com.alibaba.polardbx.rpc.perf.TcpPerfItem;
 import com.alibaba.polardbx.rpc.result.XResult;
 import com.google.common.collect.ImmutableList;
+import com.mysql.cj.x.protobuf.Polarx;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -42,13 +46,16 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiFunction;
 
 /**
  * @version 1.0
  */
 public class XClientPool {
+    private static final Logger logger = LoggerFactory.getLogger(XClientPool.class);
 
     // Base info.
     private final XConnectionManager manager;
@@ -68,7 +75,7 @@ public class XClientPool {
     private final List<XClient> agingClients = new CopyOnWriteArrayList<>();
 
     // Reference count for multi datasource same instance.
-    private final AtomicInteger refCount = new AtomicInteger(0);
+    private final AtomicInteger refCount = new AtomicInteger(1);
 
     // For idle connections.
     private final Queue<XSession> idleSessions = new ConcurrentLinkedQueue<>();
@@ -77,12 +84,60 @@ public class XClientPool {
     // Perf collection.
     private final DnPerfCollection perfCollection = new DnPerfCollection();
 
+    // mark of change in process
+    private final AtomicLong changingLeaderStartTime = new AtomicLong(0);
+    private final AtomicLong lastNoticeNanos = new AtomicLong(0);
+
     public XClientPool(XConnectionManager manager, String host, int port, String username, String password) {
         this.manager = manager;
         this.host = host;
         this.port = port;
         this.username = username;
         this.password = password;
+
+        if (DynamicConfig.getInstance().isEnableSmoothSwitchover()
+            && DynamicConfig.getInstance().getSwitchoverCheckIntervalMillis() > 0) {
+            // new a thread for every client pool and do change leader check
+            final Thread thread = new Thread(() -> {
+                while (isInUse()) {
+                    try {
+                        final int interval = DynamicConfig.getInstance().getSwitchoverCheckIntervalMillis();
+                        if (System.nanoTime() - lastNoticeNanos.get() >= TimeUnit.MILLISECONDS.toNanos(interval)) {
+                            try (final XConnection connection = getConnection(
+                                XConnectionManager.getInstance().getPacketConsumer(),
+                                XConfig.PRE_ALLOC_CONNECTION_TIMEOUT_NANOS, false)) {
+                                final int originalNetworkTimeout = connection.getNetworkTimeout();
+                                try {
+                                    connection.setNetworkTimeoutNanos(XConfig.PRE_ALLOC_CONNECTION_TIMEOUT_NANOS);
+                                    try (final XResult result = connection.execQuery("/*X leader check*/ select 1")) {
+                                        while (result.next() != null) {
+                                            ;
+                                        }
+                                    }
+                                } finally {
+                                    connection.setNetworkTimeout(null, originalNetworkTimeout);
+                                }
+                            }
+                        }
+                    } catch (Throwable t) {
+                        logger.error(t.getMessage(), t);
+                    }
+
+                    // every 100ms
+                    try {
+                        final int interval = DynamicConfig.getInstance().getSwitchoverCheckIntervalMillis();
+                        if (interval <= 0) {
+                            break;
+                        }
+                        Thread.sleep(interval);
+                    } catch (Throwable t) {
+                        logger.error(t.getMessage(), t);
+                    }
+                }
+            }, "LeaderChangeChecker-" + getDnTag());
+            thread.setDaemon(true);
+            thread.start();
+        }
     }
 
     public String getHost() {
@@ -156,6 +211,49 @@ public class XClientPool {
 
     public DnPerfCollection getPerfCollection() {
         return perfCollection;
+    }
+
+    public void markChangingLeader() {
+        final boolean before = isChangingLeader();
+        changingLeaderStartTime.set(System.currentTimeMillis());
+        if (!before && DynamicConfig.getInstance().isEnableSmoothSwitchover() && DynamicConfig.getInstance()
+            .isReleaseDirtyReadConnectionWhenSwitchover()) {
+            // record event log
+            final String instId = XConnectionManager.getInstance().getInstId().get();
+            EventLogger.log(EventType.SMOOTH_SWITCHOVER,
+                getDnTag() + " @@ " + String.join(",", getInstInfo()) + " @@ " + (null == instId ? "unknown" : instId));
+            // first notify of change leader
+            try {
+                final Class<?> targetClass =
+                    Class.forName("com.alibaba.polardbx.server.response.OnDnChangeLeaderAction");
+                final Method method = targetClass.getMethod("onDnLeaderChanging", boolean.class);
+                method.invoke(null, true);
+            } catch (Throwable t) {
+                logger.error(t.getMessage(), t);
+            }
+        }
+    }
+
+    public void clearChangingLeaderMark() {
+        changingLeaderStartTime.set(0);
+    }
+
+    public boolean isChangingLeader() {
+        while (true) {
+            final long time = changingLeaderStartTime.get();
+            if (0 == time) {
+                return false;
+            }
+            final long now = System.currentTimeMillis();
+            if (now - time > DynamicConfig.getInstance().getSwitchoverTimeoutMillis()) {
+                if (changingLeaderStartTime.compareAndSet(time, 0)) {
+                    return false;
+                }
+                // recheck
+            } else {
+                return true;
+            }
+        }
     }
 
     private DnPerfItem lastItem = null;
@@ -448,7 +546,13 @@ public class XClientPool {
                 } else {
                     if (nowPoolSize < manager.getMaxClientPerInstance()) {
                         // Allocate new client.
-                        newClient = new XClient(manager.getEventWorker(), this, consumer, timeoutNanos);
+                        newClient = new XClient(manager.getEventWorker(), this,
+                            (cli, pkt) -> {
+                                if (Polarx.ServerMessages.Type.NOTICE_VALUE == pkt.getType()) {
+                                    lastNoticeNanos.set(nowNanos);
+                                }
+                                return consumer.apply(cli, pkt);
+                            }, timeoutNanos);
                         try {
                             newConnection = newClient.newXConnection(manager.getIdGenerator());
                         } catch (Throwable e) {
